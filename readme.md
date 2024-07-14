@@ -31,17 +31,30 @@ pip install `
     -r ./requirements.txt `
     -r ./llama.cpp/requirements.txt
 mkdir -p models
-python download.py
-python .\llama.cpp\convert_hf_to_gguf.py vicuna-hf `
+
+# Download "lmsys/vicuna-13b-v1.5"
+python .\download.py `
+    "lmsys/vicuna-13b-v1.5" `
+    "models/vicuna-hf"
+python .\llama.cpp\convert_hf_to_gguf.py models\vicuna-hf `
     --outfile models/vicuna-13b-v1.5.gguf `
     --outtype q8_0
+
+# Download "mmnga/ELYZA-japanese-Llama-2-7b-fast-instruct-gguf"
+python .\download.py `
+    "mmnga/ELYZA-japanese-Llama-2-7b-fast-instruct-gguf" `
+    "models/mmnga/ELYZA-japanese-Llama-2-7b-fast-instruct-gguf" `
+    "ELYZA-japanese-Llama-2-7b-fast-instruct-q2_K.gguf"
 ```
 
 ## Run the CLI command
 
 ```shell
 # PowerShell
-llama-cli -m models/vicuna-13b-v1.5.gguf -p "I believe the meaning of life is" -n 128
+llama-cli -m .\models\vicuna-13b-v1.5.gguf -p "I believe the meaning of life is" -n 128
+
+# llama-cli -m .\models\mmnga\ELYZA-japanese-Llama-2-7b-fast-instruct-gguf\ELYZA-japanese-Llama-2-7b-fast-instruct-q2_K.gguf -p "私が思うに、明日の天気は" -n 128
+llama-cli -m .\models\mmnga\ELYZA-japanese-Llama-2-7b-fast-instruct-gguf\ELYZA-japanese-Llama-2-7b-fast-instruct-q2_K.gguf -p "I believe the meaning of life is" -n 128
 ```
 
 
