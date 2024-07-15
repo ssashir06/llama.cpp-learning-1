@@ -30,6 +30,11 @@ python3 -m venv venv
 pip install `
     -r ./requirements.txt `
     -r ./llama.cpp/requirements.txt
+$env:CMAKE_ARGS="-DGGML_CUDA=on -DMULTITHREADED_BUILD=6"
+pip install `
+    --force-reinstall `
+    --no-cache-dir `
+    llama-cpp-python # Not using any cache to be able to use the CMake options correctly.
 mkdir -p models
 
 # Download "lmsys/vicuna-13b-v1.5"
@@ -53,10 +58,21 @@ python .\download.py `
 # PowerShell
 llama-cli -m .\models\vicuna-13b-v1.5.gguf -p "I believe the meaning of life is" -n 128
 
-# llama-cli -m .\models\mmnga\ELYZA-japanese-Llama-2-7b-fast-instruct-gguf\ELYZA-japanese-Llama-2-7b-fast-instruct-q2_K.gguf -p "私が思うに、明日の天気は" -n 128
 llama-cli -m .\models\mmnga\ELYZA-japanese-Llama-2-7b-fast-instruct-gguf\ELYZA-japanese-Llama-2-7b-fast-instruct-q2_K.gguf -p "I believe the meaning of life is" -n 128
 ```
 
+## Run a Python code
+
+```shell
+
+python .\llamacpp-demo-1.py .\models\vicuna-13b-v1.5.gguf "Q: Name the planets in the solar system? A: "
+
+python .\llamacpp-demo-1.py .\models\vicuna-13b-v1.5.gguf "私が思うに、明日は"
+
+python .\llamacpp-demo-1.py .\models\mmnga\ELYZA-japanese-Llama-2-7b-fast-instruct-gguf\ELYZA-japanese-Llama-2-7b-fast-instruct-q2_K.gguf "Q: Name the planets in the solar system? A: "
+
+python .\llamacpp-demo-1.py .\models\mmnga\ELYZA-japanese-Llama-2-7b-fast-instruct-gguf\ELYZA-japanese-Llama-2-7b-fast-instruct-q2_K.gguf "私が思うに、明日は"
+```
 
 ## References:
 
